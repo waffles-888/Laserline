@@ -11,4 +11,9 @@ input.addEventListener("change", function() {
 
 /* when play/pause button is clicked */
 document.getElementById("playPauseButton").addEventListener("click", function() {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+    } else {
+        audioPlayer.pause();
+    }
 });
