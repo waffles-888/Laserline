@@ -1,6 +1,6 @@
 /* allow for files input */
 const input = document.getElementById("fileInput");
-const audioplayer = document.getElementById("audioPlayer");
+const audioPlayer = document.getElementById("audioPlayer");
 
 /* handle file input */
 input.addEventListener("change", function() {
