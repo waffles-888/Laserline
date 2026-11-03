@@ -23,11 +23,16 @@ document.getElementById("playPauseButton").addEventListener("click", function() 
 const audioCtx = new AudioContext();
 const source = audioCtx.createMediaElementSource(audioPlayer);
 
+/* consts for volume slider */
+const volumeSlider = document.getElementById("volumeSlider");
+const volumeSliderValue = document.getElementById("volumeSliderValue");
+
 /* connecting the audio into the analyser */
 const analyser = audioCtx.createAnalyser();
 
 /* gain node for volume */
 const gainNode = audioCtx.createGain();
+gainNode.gain.value = volumeSlider.value / 100;
 
 /* connect */
 source.connect(gainNode);
@@ -35,4 +40,8 @@ gainNode.connect(analyser);
 analyser.connect(audioCtx.destination);
 
 /* volume slider */
-const volumeSliderValue = document.getElementById("volumeSliderValue");
+volumeSlider.addEventListener("input", function(){
+    const volume = volumeSlider.value / 100;
+    gainNode.gain.value = volume;
+    volumeSliderValue.textContent = volumeSlider.value;
+});
