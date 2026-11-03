@@ -45,3 +45,29 @@ volumeSlider.addEventListener("input", function(){
     gainNode.gain.value = volume;
     volumeSliderValue.textContent = volumeSlider.value;
 });
+
+/* canvas */
+const canvas = document.getElementById("laserCanvas");
+const canvasCtx = canvas.getContext("2d");
+
+/* frequency data */
+analyser.fftSize = 256;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+const barwidth = canvas.width / bufferLength;
+
+/* creating visualizer */
+function draw() {
+    requestAnimationFrame(draw);
+    analyser.getByteFrequencyData(dataArray);
+    canvasCtx.fillStyle = "#363199"; 
+    canvasCtx.fillRect(0,0, canvas.width, canvas.height);
+    canvasCtx.fillStyle = "#f9f9f9";
+    for (let i = 0; i < bufferLength; i++) { 
+        const barHeight = (dataArray[i] / 255) * canvas.height;
+        const x = i * barwidth;
+        const y = canvas.height - barHeight;
+        canvasCtx.fillRect(x, y, barwidth, barHeight);
+    }
+}
+draw();
