@@ -71,3 +71,21 @@ function draw() {
     }
 }
 draw();
+
+/* seek bar */
+const seekBar = document.getElementById("seekBar");
+
+/* get max time for audio and set it to seek bar */
+audioPlayer.addEventListener("loadedmetadata", function(){
+    seekBar.max = audioPlayer.duration;
+});
+
+/* move seek bar as audio plays */
+audioPlayer.addEventListener("timeupdate", function(){
+    seekBar.value = audioPlayer.currentTime;
+});
+
+/* update audio when seek bar is moved */
+seekBar.addEventListener("input", function(){
+    audioPlayer.currentTime = seekBar.value;
+});
