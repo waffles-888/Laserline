@@ -1,3 +1,29 @@
+:root {
+    --neon-pink: #ff00ff;
+    --electric-blue: #00ffff;
+    --neon-yellow: #ffff00;
+    --dark-navy: #131343;
+}
+
+@font-face {
+    font-family: "Milker";
+    src: 
+        url("font/Milker.otf")format("opentype");
+}
+
+h1 {
+    font-family: "Milker";
+}
+
+.canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
 .title {
     display: flex;
     justify-content: center;
@@ -8,6 +34,7 @@
 }
 
 .main {
+    font-family: "Milker";
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,3 +42,18 @@
     font-size: 1.5rem;
 }
 
+.playSeek {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.volFile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
