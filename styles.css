@@ -67,5 +67,7 @@ h1 {
 }
 
 .volumeSliderValue {
+    display: inline-block;
+    text-align: right;
     width: 3ch;
 }
