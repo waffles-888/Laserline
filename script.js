@@ -49,9 +49,12 @@ volumeSlider.addEventListener("input", function(){
 /* canvas */
 const canvas = document.getElementById("laserCanvas");
 const canvasCtx = canvas.getContext("2d");
+const sky = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
+sky.addColorStop(0, "#363199");
+sky.addColorStop(1, "#000000");
 
 /* frequency data */
-analyser.fftSize = 256;
+analyser.fftSize = 128;
 const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 const barwidth = canvas.width / bufferLength;
@@ -60,9 +63,18 @@ const barwidth = canvas.width / bufferLength;
 function draw() {
     requestAnimationFrame(draw);
     analyser.getByteFrequencyData(dataArray);
-    canvasCtx.fillStyle = "#363199"; 
+    canvasCtx.fillStyle = sky;
+    canvasCtx.shadowBlur = 0;
     canvasCtx.fillRect(0,0, canvas.width, canvas.height);
-    canvasCtx.fillStyle = "#f9f9f9";
+    canvasCtx.fillStyle = "#ff00ff";
+    canvasCtx.shadowColor = "#ff00ff";
+    canvasCtx.shadowBlur = 20;
+    canvasCtx.font = "50px Milker";
+    canvasCtx.textAlign = "center";
+    canvasCtx.fillText("Laserline", canvas.width / 2, 50);
+    canvasCtx.shadowBlur = 20;
+    canvasCtx.shadowColor = "#00ffff";
+    canvasCtx.fillStyle = "#00ffff";
     for (let i = 0; i < bufferLength; i++) { 
         const barHeight = (dataArray[i] / 255) * canvas.height;
         const x = i * barwidth;
@@ -89,3 +101,4 @@ audioPlayer.addEventListener("timeupdate", function(){
 seekBar.addEventListener("input", function(){
     audioPlayer.currentTime = seekBar.value;
 });
+

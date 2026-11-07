@@ -3,6 +3,7 @@
     --electric-blue: #00ffff;
     --neon-yellow: #ffff00;
     --dark-navy: #131343;
+    --deck-width: 1100px;
 }
 
 @font-face {
@@ -23,18 +24,6 @@ h1 {
     margin-bottom: 1rem;
 }
 
-
-.title {
-    float: left;
-    display: flex;
-    padding: 1rem;
-    justify-content: top left;
-    align-items: center;
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
 .main {
     font-family: "Milker";
     display: flex;
@@ -52,7 +41,7 @@ h1 {
     text-align: center;
     margin-bottom: 1rem;
     padding: 0.5rem;
-    width: 800px;
+    width: 100%;
 }
 
 .seekBar {
@@ -65,7 +54,6 @@ h1 {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 1rem;
     flex-grow: 1;
 }
 
@@ -75,4 +63,9 @@ h1 {
     align-items: center;
     text-align: center;
     margin-bottom: 1rem;
+    width: 100%;
+}
+
+.volumeSliderValue {
+    width: 3ch;
 }
