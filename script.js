@@ -102,6 +102,7 @@ const seekTime = document.getElementById("seekTime");
 /* get max time for audio and set it to seek bar */
 audioPlayer.addEventListener("loadedmetadata", function(){
     seekBar.max = audioPlayer.duration;
+    seekTime.textContent = formatTime(audioPlayer.duration);
 });
 
 /* move seek bar as audio plays */
