@@ -10,7 +10,9 @@ input.addEventListener("change", function() {
 })
 
 /* when play/pause button is clicked */
-document.getElementById("playPauseButton").addEventListener("click", function() {
+const playPauseButton = document.getElementById("playPauseButton");
+
+playPauseButton.addEventListener("click", function() {
     if (audioPlayer.paused) {
         audioCtx.resume();
         audioPlayer.play();

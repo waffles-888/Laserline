@@ -45,6 +45,26 @@ h1 {
     width: 100%;
 }
 
+.playPauseButton {
+    font-family: "Milker";
+    padding: 0.5rem 1rem;
+    color: var(--dark-navy);
+    background-color: var(--electric-blue);
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 10px var(--electric-blue);
+}
+
+.playPauseButton:hover {
+    background-color: var(--neon-pink);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.playPauseButton:active {
+    transform: scale(0.95);
+}
+
 .seekBar {
     width: 100%;
     margin: 0 1rem;
