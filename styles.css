@@ -3,7 +3,8 @@
     --electric-blue: #00ffff;
     --neon-yellow: #ffff00;
     --dark-navy: #131343;
-    --deck-width: 1100px;
+    --deck-width: 90vw;
+    --deck-height: 80vh;
 }
 
 @font-face {
@@ -16,7 +17,7 @@ h1 {
     font-family: "Milker";
 }
 
-.canvas {
+.canvasDiv {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,4 +71,9 @@ h1 {
     display: inline-block;
     text-align: right;
     width: 3ch;
+}
+
+#laserCanvas {
+    width: var(--deck-width);
+    height: var(--deck-height);
 }

@@ -49,15 +49,27 @@ volumeSlider.addEventListener("input", function(){
 /* canvas */
 const canvas = document.getElementById("laserCanvas");
 const canvasCtx = canvas.getContext("2d");
-const sky = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
-sky.addColorStop(0, "#363199");
-sky.addColorStop(1, "#000000");
 
 /* frequency data */
 analyser.fftSize = 128;
 const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
-const barwidth = canvas.width / bufferLength;
+
+/* resize canvas per screen size */
+let barwidth;
+let sky;
+function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    barwidth = canvas.width / bufferLength;
+    sky = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
+    sky.addColorStop(0, "#363199");
+    sky.addColorStop(1, "#000000");
+};
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 /* creating visualizer */
 function draw() {
@@ -72,7 +84,6 @@ function draw() {
     canvasCtx.font = "50px Milker";
     canvasCtx.textAlign = "center";
     canvasCtx.fillText("Laserline", canvas.width / 2, 50);
-    canvasCtx.shadowBlur = 20;
     canvasCtx.shadowColor = "#00ffff";
     canvasCtx.fillStyle = "#00ffff";
     for (let i = 0; i < bufferLength; i++) { 
