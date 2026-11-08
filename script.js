@@ -21,6 +21,15 @@ playPauseButton.addEventListener("click", function() {
     }
 });
 
+/* play/button reset */
+audioPlayer.addEventListener("play", function(){
+    playPauseButton.textContent = "Pause";
+});
+
+audioPlayer.addEventListener("pause", function(){
+    playPauseButton.textContent = "Play";
+});
+
 /* Create audio for analyser */
 const audioCtx = new AudioContext();
 const source = audioCtx.createMediaElementSource(audioPlayer);
