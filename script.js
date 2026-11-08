@@ -97,6 +97,7 @@ draw();
 
 /* seek bar */
 const seekBar = document.getElementById("seekBar");
+const seekTime = document.getElementById("seekTime");
 
 /* get max time for audio and set it to seek bar */
 audioPlayer.addEventListener("loadedmetadata", function(){
@@ -106,6 +107,7 @@ audioPlayer.addEventListener("loadedmetadata", function(){
 /* move seek bar as audio plays */
 audioPlayer.addEventListener("timeupdate", function(){
     seekBar.value = audioPlayer.currentTime;
+    seekTime.textContent = formatTime(audioPlayer.currentTime) + " / " + formatTime(audioPlayer.duration);
 });
 
 /* update audio when seek bar is moved */
@@ -113,3 +115,9 @@ seekBar.addEventListener("input", function(){
     audioPlayer.currentTime = seekBar.value;
 });
 
+/* seekbar time*/
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return minutes + ":" + String(secs).padStart(2, '0');
+}
