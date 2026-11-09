@@ -64,6 +64,7 @@
 .seekBar {
     width: 100%;
     margin: 0 1rem;
+    accent-color: var(--neon-pink);
 }
 
 .seekControls {
@@ -87,6 +88,10 @@
     display: inline-block;
     text-align: right;
     width: 3ch;
+}
+
+.volumeSlider {
+    accent-color: var(--neon-pink);
 }
 
 #laserCanvas {

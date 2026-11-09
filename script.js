@@ -6,7 +6,20 @@ const audioPlayer = document.getElementById("audioPlayer");
 input.addEventListener("change", function() {
     const file = input.files[0];
     const url = URL.createObjectURL(file);
+    const coverArt = document.getElementById("coverArt");
     audioPlayer.src = url;
+    jsmediatags.read(file, {
+    onSuccess: function(tag) {
+        console.log(tag);
+        const picture = tag.tags.picture;
+        const blob = new Blob([new Uint8Array(picture.data)], {type: picture.format});
+        const imageUrl = URL.createObjectURL(blob);
+        coverArt.src = imageUrl;
+    },
+    onError: function(error) {
+        console.log(error);
+    }
+})
 })
 
 /* when play/pause button is clicked */
@@ -69,14 +82,30 @@ const dataArray = new Uint8Array(bufferLength);
 /* resize canvas per screen size */
 let barwidth;
 let sky;
+let sunX;
+let sunY;
+let sunRadius;
+let sunGradient;
+
 function resizeCanvas() {
+    /* resize canvas based on screen size */
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
-
+    /* bar width and sky changes based on canvas size */
     barwidth = canvas.width / bufferLength;
     sky = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
     sky.addColorStop(0, "#363199");
     sky.addColorStop(1, "#000000");
+    /* sun position moving based on canvas size */
+    sunRadius = canvas.width * 0.15;
+    sunX = canvas.width - sunRadius - 40;
+    sunY = canvas.height + 40;
+
+    sunGradient = canvasCtx.createLinearGradient(0, sunY - sunRadius, 0, sunY + sunRadius);
+    sunGradient.addColorStop(0, "#ffff00");
+    sunGradient.addColorStop(1, "#ff00ff");
+
+
 };
 
 resizeCanvas();
@@ -89,6 +118,12 @@ function draw() {
     canvasCtx.fillStyle = sky;
     canvasCtx.shadowBlur = 0;
     canvasCtx.fillRect(0,0, canvas.width, canvas.height);
+    canvasCtx.fillStyle = "#ffff00";
+    canvasCtx.shadowColor = "#ffff00";
+    canvasCtx.shadowBlur = 30;
+    canvasCtx.beginPath();
+    canvasCtx.arc(canvas.width / 1.1, canvas.height / 4.5, 100,0,Math.PI * 2);
+    canvasCtx.fill();
     canvasCtx.fillStyle = "#ff00ff";
     canvasCtx.shadowColor = "#ff00ff";
     canvasCtx.shadowBlur = 20;
