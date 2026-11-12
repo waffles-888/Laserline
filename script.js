@@ -10,11 +10,16 @@ input.addEventListener("change", function() {
     audioPlayer.src = url;
     jsmediatags.read(file, {
     onSuccess: function(tag) {
-        console.log(tag);
         const picture = tag.tags.picture;
+
+        if (picture) {
         const blob = new Blob([new Uint8Array(picture.data)], {type: picture.format});
         const imageUrl = URL.createObjectURL(blob);
         coverArt.src = imageUrl;
+        coverArt.style.display = "block";
+        } else {
+            coverArt.style.display = "none";
+        }
     },
     onError: function(error) {
         console.log(error);
@@ -97,11 +102,11 @@ function resizeCanvas() {
     sky.addColorStop(0, "#363199");
     sky.addColorStop(1, "#000000");
     /* sun position moving based on canvas size */
-    sunRadius = canvas.width * 0.15;
-    sunX = canvas.width - sunRadius - 40;
-    sunY = canvas.height + 40;
+    sunRadius = canvas.height * 0.4;
+    sunX = canvas.width / 2;
+    sunY = canvas.height;
 
-    sunGradient = canvasCtx.createLinearGradient(0, sunY - sunRadius, 0, sunY + sunRadius);
+    sunGradient = canvasCtx.createLinearGradient(0, sunY - sunRadius, 0, sunY);
     sunGradient.addColorStop(0, "#ffff00");
     sunGradient.addColorStop(1, "#ff00ff");
 
@@ -118,11 +123,11 @@ function draw() {
     canvasCtx.fillStyle = sky;
     canvasCtx.shadowBlur = 0;
     canvasCtx.fillRect(0,0, canvas.width, canvas.height);
-    canvasCtx.fillStyle = "#ffff00";
-    canvasCtx.shadowColor = "#ffff00";
+    canvasCtx.fillStyle = sunGradient;
+    canvasCtx.shadowColor = "#FF6D92";
     canvasCtx.shadowBlur = 30;
     canvasCtx.beginPath();
-    canvasCtx.arc(canvas.width / 1.1, canvas.height / 4.5, 100,0,Math.PI * 2);
+    canvasCtx.arc(sunX, sunY, sunRadius, 0, Math.PI * 2);
     canvasCtx.fill();
     canvasCtx.fillStyle = "#ff00ff";
     canvasCtx.shadowColor = "#ff00ff";
