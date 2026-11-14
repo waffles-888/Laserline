@@ -23,6 +23,7 @@ input.addEventListener("change", function() {
     },
     onError: function(error) {
         console.log(error);
+        coverArt.style.display = "none";
     }
 })
 })
@@ -82,6 +83,7 @@ const canvasCtx = canvas.getContext("2d");
 /* frequency data */
 analyser.fftSize = 128;
 const bufferLength = analyser.frequencyBinCount;
+const visibleBars = Math.floor(bufferLength * 0.7);
 const dataArray = new Uint8Array(bufferLength);
 
 /* resize canvas per screen size */
@@ -91,24 +93,26 @@ let sunX;
 let sunY;
 let sunRadius;
 let sunGradient;
+let horizonY;
 
 function resizeCanvas() {
     /* resize canvas based on screen size */
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
     /* bar width and sky changes based on canvas size */
-    barwidth = canvas.width / bufferLength;
+    barwidth = canvas.width / visibleBars;
     sky = canvasCtx.createLinearGradient(0, 0, 0, canvas.height);
     sky.addColorStop(0, "#363199");
     sky.addColorStop(1, "#000000");
     /* sun position moving based on canvas size */
     sunRadius = canvas.height * 0.4;
     sunX = canvas.width / 2;
-    sunY = canvas.height;
+    sunY = horizonY = canvas.height * 0.7;
 
     sunGradient = canvasCtx.createLinearGradient(0, sunY - sunRadius, 0, sunY);
     sunGradient.addColorStop(0, "#ffff00");
     sunGradient.addColorStop(1, "#ff00ff");
+
 
 
 };
@@ -129,19 +133,49 @@ function draw() {
     canvasCtx.beginPath();
     canvasCtx.arc(sunX, sunY, sunRadius, 0, Math.PI * 2);
     canvasCtx.fill();
+    canvasCtx.shadowBlur = 0;
+    canvasCtx.fillStyle = "#0a0a22";
+    canvasCtx.fillRect(0, horizonY, canvas.width, canvas.height - horizonY);
+    /* horisontal lines */
+    canvasCtx.strokeStyle = "#ff00ff";
+    canvasCtx.shadowColor = "#ff00ff";
+    canvasCtx.lineWidth = 2;
+    canvasCtx.shadowBlur = 5;
+    const numberOfLines = 10;
+    for (let i = 1; i <= numberOfLines; i++) {
+        const fraction = i / numberOfLines;
+        const y = horizonY + (canvas.height - horizonY) * fraction * fraction;
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(0, y);
+            canvasCtx.lineTo(canvas.width, y);
+            canvasCtx.stroke();
+    }
+    /* vertical lines */
+    canvasCtx.lineWidth = 2;
+    canvasCtx.shadowBlur = 5;
+    const numberOfVerticalLines = 10;
+    for (let i = -numberOfVerticalLines; i <= numberOfVerticalLines; i++) {
+        const bottomX = canvas.width / 2 + i * (canvas.width / 8);
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(canvas.width / 2, horizonY);
+            canvasCtx.lineTo(bottomX, canvas.height);
+            canvasCtx.stroke();
+    }
+    /* title */
     canvasCtx.fillStyle = "#ff00ff";
     canvasCtx.shadowColor = "#ff00ff";
     canvasCtx.shadowBlur = 20;
     canvasCtx.font = "50px Milker";
     canvasCtx.textAlign = "center";
     canvasCtx.fillText("Laserline", canvas.width / 2, 50);
+    /* bars */
     canvasCtx.shadowColor = "#00ffff";
     canvasCtx.fillStyle = "#00ffff";
-    for (let i = 0; i < bufferLength; i++) { 
-        const barHeight = (dataArray[i] / 255) * canvas.height;
+    for (let i = 0; i < visibleBars; i++) { 
+        const barHeight = (dataArray[i] / 255) * horizonY;
         const x = i * barwidth;
         const y = canvas.height - barHeight;
-        canvasCtx.fillRect(x, y, barwidth, barHeight);
+        canvasCtx.fillRect(x, y, barwidth * 0.4, barHeight);
     }
 }
 draw();
