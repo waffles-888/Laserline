@@ -136,7 +136,7 @@ function draw() {
     canvasCtx.shadowBlur = 0;
     canvasCtx.fillStyle = "#0a0a22";
     canvasCtx.fillRect(0, horizonY, canvas.width, canvas.height - horizonY);
-    /* horisontal lines */
+    /* horizontal lines */
     canvasCtx.strokeStyle = "#ff00ff";
     canvasCtx.shadowColor = "#ff00ff";
     canvasCtx.lineWidth = 2;
